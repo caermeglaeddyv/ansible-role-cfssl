@@ -1,0 +1,33 @@
+{
+  "CN": "{{ cfssl_server_cn }}",
+  "key": {
+    "algo": "{{ cfssl_server_key_algo }}",
+    "size": {{ cfssl_server_key_size }}
+  },
+  "names": [
+  {% for name in cfssl_server_names -%}
+  {
+    "C": "{{ name.c }}",
+    "L": "{{ name.l }}",
+    "O": "{{ name.o }}",
+    "OU": "{{ name.ou }}"
+  }
+  {% endfor -%}
+  ],
+  "hosts": [
+    {% if cfssl_server_hosts -%}
+    {% for csh in cfssl_server_hosts -%}
+    "{{ csh }}",
+    {% endfor -%}
+    {% for server in ansible_play_batch -%}
+    "{{ hostvars[server].ansible_default_ipv4.address }}",
+    {% endfor -%}
+    {% else -%}
+    {% for server in ansible_play_batch -%}
+    "{{ server }}",
+    {% endfor -%}
+    {% endif -%}
+    "127.0.0.1",
+    "localhost"
+  ]
+}

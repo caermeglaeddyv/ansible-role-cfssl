@@ -1,0 +1,40 @@
+---
+- name: create cfssl directory
+  file:
+    path: "{{ cfssl_project_dir }}"
+    state: directory
+  delegate_to: localhost
+  run_once: true
+  become: no
+  tags:
+  - never
+
+- name: generate cfssl config files
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ cfssl_project_dir }}/{{ item }}"
+  with_items:
+  - ca.json
+  - server.json
+  - cfssl.json
+  delegate_to: localhost
+  run_once: true
+  become: no
+  tags:
+  - never
+
+- name: generate cfssl certificates
+  shell: |
+    set -o pipefail \
+    && cfssl gencert -initca ca.json | cfssljson -bare {{ cfssl_prefix }}-ca \
+    && cfssl gencert -ca {{ cfssl_prefix }}-ca.pem -ca-key {{ cfssl_prefix }}-ca-key.pem \
+    -config server.json -profile=server cfssl.json | cfssljson -bare {{ cfssl_prefix }}
+  environment:
+    ANSIBLE_CFSSL_WORKDIR: "{{ cfssl_project_dir }}"
+  args:
+    chdir: $ANSIBLE_CFSSL_WORKDIR
+  delegate_to: localhost
+  run_once: true
+  become: no
+  tags:
+  - never

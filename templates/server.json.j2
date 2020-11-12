@@ -1,0 +1,14 @@
+{
+  "signing": {
+      "profiles": {
+          "server": {
+              "expiry": "{{ cfssl_server_expiry }}",
+              "usages": [
+                  {% for usage in cfssl_server_usages -%}
+                  "{{ usage }}"{{ "," if not loop.last }}
+                  {% endfor %}
+              ]
+          }
+      }
+  }
+}

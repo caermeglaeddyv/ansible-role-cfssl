@@ -1,0 +1,60 @@
+---
+# defaults file for cfssl
+
+
+# Variable which is common for most projects, used in
+# configuration files or file/directory names.
+# By default used as reference for cfssl_project_dir variable:
+cfssl_project_name: test
+
+# Variable which is common for most projects, used as
+# project working directory on the localhost for the role.
+# Currently is used to store created certificates:
+cfssl_project_dir: "{{ cfssl_project_name }}"
+
+# Common name for Root CA:
+cfssl_ca_cn: "cfssl root ca"
+
+# Key algorithm for Root CA:
+cfssl_ca_key_algo: "rsa"
+
+# Key size for Root CA:
+cfssl_ca_key_size: 4096
+
+# Distinguished names for Root CA:
+cfssl_ca_names:
+- c: "Neverland"
+  l: "Rivia"
+  o: "Witchers"
+  ou: "Caer Morhen"
+
+# server certificate expiry in hours:
+cfssl_server_expiry: "17520h"
+
+# certificate usage types:
+cfssl_server_usages:
+- digital signature
+- key encipherment
+- server auth
+
+# Common name for server certificate:
+cfssl_server_cn: "server"
+
+# Key algorithm for server certificate:
+cfssl_server_key_algo: "rsa"
+
+# Key size for server certificate:
+cfssl_server_key_size: 2048
+
+# Distinguished names for server certificate:
+cfssl_server_names:
+- c: "Neverland"
+  l: "Rivia"
+  o: "Witchers"
+  ou: "Caer Morhen"
+
+# Hostnames, DNS names and/or IP addressed for which
+# server certificate will be signed. If your server hostnames
+# and IP addresses are different from ones in inventory,
+# provide them manually using this variable:
+cfssl_server_hosts: []
