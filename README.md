@@ -84,6 +84,9 @@ cfssl_server_names:
 # provide them manually using this variable:
 cfssl_server_hosts: []
 
+# Prefix that will be added to each generated file name:
+cfssl_prefix: test
+
 ```
 
 
