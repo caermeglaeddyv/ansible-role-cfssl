@@ -1,7 +1,7 @@
 Ansible role: CFSSL
 =========
 
-This role is used to install cfssl cluster.
+This role is used to generate cfssl profiles and certificates.
 
 For now, it does the following:
 - generates cfssl root CA and server certificates
@@ -15,7 +15,6 @@ Anyway. feel free to test by yourself, suggest addition of new functionality and
 
 Role is tested with:
 - Ansible version >= 2.8.6
-- CentOS version >= 7.6 (1803)
 
 cfssl and cfssljson must be installed on localhost if cfssl_create variable is set to True (default).
 
